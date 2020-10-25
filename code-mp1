@@ -1,0 +1,46 @@
+int ledPin[] = {4,33,32};
+unsigned long pastTime=0;
+bool statusLed[3] = {LOW};
+unsigned long desireTime[]={5000,6000,10000};
+
+void setup(){
+  for(int i = 0;i<3;i++) pinMode(ledPin[i],OUTPUT);
+}
+
+void loop(){
+  unsigned long currentTime = millis();
+  if(currentTime <= desireTime[0]){
+      statusLed[0] =HIGH;
+      digitalWrite(ledPin[0],statusLed[0]);
+      if(currentTime == desireTime[0]){
+        statusLed[0] =LOW;
+        digitalWrite(ledPin[0],statusLed[0]);
+        if(desireTime[0] > desireTime[1]){
+          desireTime[1]=desireTime[0]+1000;
+          desireTime[2]=desireTime[1]+4000;
+        }
+      }
+  }else if(currentTime <=desireTime[1]){
+      statusLed[1] =HIGH;
+      digitalWrite(ledPin[1],statusLed[1]);
+      if(currentTime == desireTime[1]){
+        statusLed[1] =LOW;
+        digitalWrite(ledPin[1],statusLed[1]);
+        if(desireTime[1] < desireTime[2]){
+          
+        }else if(desireTime[0] < desireTime[1]){
+          desireTime[0] =desireTime[1] + 5000;
+        }
+      }
+  }else if(currentTime <=desireTime[2]){
+      statusLed[2] =HIGH;
+      digitalWrite(ledPin[2],statusLed[2]);
+      if(currentTime == desireTime[2]){
+        statusLed[2] =LOW;
+        digitalWrite(ledPin[2],statusLed[2]);
+        if(desireTime[1]<desireTime[2]){
+          desireTime[1] =desireTime[2] + 1000;
+        }
+      }
+  }
+}
